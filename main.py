@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import os
+import webbrowser
 
 def say(text):
     os.system(f'espeak "{text}"')
@@ -28,5 +29,17 @@ def take_command():
 if __name__ == "__main__":
     say("Hello, from A.I ")
     print("Listening...")
-    text = take_command()
-    say(text)
+    query = take_command()
+    # say(query)
+
+    # list of websites to be opened
+    sites=[["youtube","https://youtube.com"],["instagram","https://instagram.com"],
+           ["google","https://google.com"]]
+    
+
+    for site in sites:
+        if f"open {site[0]}".lower() in query.lower():
+            webbrowser.open(site[1])
+            say(f"opening {site[0]} sir")
+            print(f"opening {site[0]}...")
+            
