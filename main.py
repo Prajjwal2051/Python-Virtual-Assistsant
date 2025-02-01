@@ -1,9 +1,14 @@
 import speech_recognition as sr
 import os
 import webbrowser
+import datetime
+import pyttsx3
 
+# updated from os.espeak to pyttsx3 which works offline
 def say(text):
-    os.system(f'espeak "{text}"')
+    engine=pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
 
 def take_command():
     r = sr.Recognizer()
@@ -42,4 +47,10 @@ if __name__ == "__main__":
             webbrowser.open(site[1])
             say(f"opening {site[0]} sir")
             print(f"opening {site[0]}...")
-            
+
+    if "the time" in query:
+        hour=datetime.datetime.now().strftime("%H")
+        mins=datetime.datetime.now().strftime("%M")
+
+        print(f"{hour} Hrs, {mins} Mins")
+        say(f"the time is {hour} hours and {mins} minutes")
