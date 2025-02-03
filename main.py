@@ -25,19 +25,24 @@ def search_wikipedia(query):
 
 
 def say(text):
-    tts=gTTS(text=text,lang="en")
+    tts = gTTS(text=text, lang="en")
     tts.save("response.mp3")
-    audio=AudioSegment.from_mp3("response.mp3")
-    play(audio)
-    os.remove("response.mp3")
+    audio = AudioSegment.from_mp3("response.mp3")
+    
+    try:
+        play(audio)
+    finally:
+        os.remove("response.mp3")  # Ensures cleanup even if an error occurs
+
 
 def take_command():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Adjusting for ambient noise... Please wait.")
         r.adjust_for_ambient_noise(source)  # Helps with background noise
+        r.dynamic_energy_threshold = True
         print("Listening...")
-        r.pause_threshold = 1.3  # Pause before recognizing speech
+        r.pause_threshold = 1.5  # Pause before recognizing speech
         audio = r.listen(source)  # Must be inside the `with` block
 
     try:
@@ -55,30 +60,36 @@ def take_command():
 if __name__ == "__main__":
     say("Hello, from Linux ")
     print("hello, from linux")
-    query = take_command()
-    # say(query)
+    while True: 
+        query = take_command()
+        # say(query)
 
-    # list of websites to be opened
-    sites=[
+        # list of websites to be opened
+        sites=[
+            
+            ["youtube","https://youtube.com"],["instagram","https://instagram.com"],
+            ["google","https://google.com"],["music","https://music.youtube.com"]
+            
+            ]
         
-        ["youtube","https://youtube.com"],["instagram","https://instagram.com"],
-        ["google","https://google.com"],["music","https://music.youtube.com"]
-           
-        ]
-    
 
-    for site in sites:
-        if f"open {site[0]}".lower() in query.lower():
-            webbrowser.open(site[1])
-            say(f"opening {site[0]} sir")
-            print(f"opening {site[0]}...")
+        for site in sites:
+            if f"open {site[0]}".lower() in query.lower():
+                webbrowser.open(site[1])
+                say(f"opening {site[0]} sir")
+                print(f"opening {site[0]}...")
 
-    if "the time" in query:
-        hour=datetime.datetime.now().strftime("%H")
-        mins=datetime.datetime.now().strftime("%M")
+        if "the time" in query:
+            hour=datetime.datetime.now().strftime("%H")
+            mins=datetime.datetime.now().strftime("%M")
 
-        print(f"{hour} Hrs, {mins} Mins")
-        say(f"the time is {hour} hours and {mins} minutes")
+            print(f"{hour} Hrs, {mins} Mins")
+            say(f"the time is {hour} hours and {mins} minutes")
 
-    if "wikipedia" in query.lower():
-        search_wikipedia(query)
+        if "wikipedia" in query.lower():
+            search_query=query.lower().replace("wikipedia","").strip()
+            search_wikipedia(search_query)
+
+        if "exit" in query.lower() or "quit" in query.lower() or "stop" in query.lower():
+            say("Goodbye!")
+            break
