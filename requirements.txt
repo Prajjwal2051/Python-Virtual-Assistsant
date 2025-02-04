@@ -11,8 +11,6 @@ SpeechRecognition==3.14.1
 typing_extensions==4.12.2
 urllib3==2.3.0
 wikipedia==1.4.0
-torch
-transformers
-accelerate
+huggingface_hub>=0.20.3
 
 

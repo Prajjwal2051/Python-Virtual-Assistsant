@@ -9,9 +9,11 @@ from pydub.playback import play
 import wikipedia
 from huggingface_hub import InferenceClient
 
+API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+
 client=InferenceClient(
     provider="hf-inference",
-    api_key="YOUR_API_KEY"
+    api_key=API_KEY
 )
 
 def chat_with_bot(query):

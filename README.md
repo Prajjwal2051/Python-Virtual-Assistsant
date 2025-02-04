@@ -1,110 +1,119 @@
-# Python Virtual Assistant
+# Python Voice Assistant
 
-This is a Python-based **voice assistant** that can recognize speech, search Wikipedia, open websites, tell the time, and even chat using Hugging Face's **Zephyr-7B** chatbot.
+A virtual voice assistant that can perform tasks like:
+- **Opening websites** (Google, YouTube, Instagram, etc.)
+- **Telling the time**
+- **Searching Wikipedia**
+- **Conversing with an AI chatbot**
+- **Speech recognition and text-to-speech**
+
+This assistant uses:
+- **SpeechRecognition** for voice input
+- **Google Text-to-Speech (gTTS)** for voice output
+- **Wikipedia API** for information retrieval
+- **Hugging Face Chatbot API** for AI conversations
 
 ---
 
-## 🔧 Features
-- **Speech Recognition** 🎧 (Uses Google Speech API)  
-- **Text-to-Speech (TTS)** 🔊 (Using Google TTS)  
-- **Wikipedia Search** 📚  
-- **Website Shortcuts** 🌐 (Easily open sites like YouTube, Google, etc.)  
-- **AI Chatbot** 🤖 (Hugging Face’s Zephyr-7B)  
+## 🚀 Features
+✔ **Voice-controlled commands**
+✔ **AI-powered chatbot using Hugging Face API**
+✔ **Wikipedia search integration**
+✔ **Opens websites with voice commands**
+✔ **Supports Windows, macOS, and Linux**
+✔ **Works offline for speech recognition (except chatbot and Wikipedia search)**
 
 ---
 
-## 📌 Installation Guide (Step-by-Step)
-Follow these steps to **set up and run the assistant** on your system.
+## 📦 Installation
 
-### **1️⃣ Clone the Repository**
-```bash
-git clone https://github.com/Prajjwal2051/Python-Virtual-Assistsant.git
-cd Python-Virtual-Assistsant
+### **Step 1: Clone the Repository**
+```sh
+# Using Git
+git clone https://github.com/Prajjwal2051/Python-Virtual-Assistant.git
+cd Python-Virtual-Assistant
 ```
 
----
-
-### **2️⃣ Create a Virtual Environment**
-```bash
-python3 -m venv assist
-```
-- **(Optional) If using fish shell:**
-  ```bash
-  set -gx VIRTUAL_ENV assist
-  set -gx PATH $VIRTUAL_ENV/bin $PATH
-  ```
-
----
-
-### **3️⃣ Activate the Virtual Environment**
-- **For Bash/Zsh:**  
-  ```bash
-  source assist/bin/activate
-  ```
-- **For Fish shell:**  
-  ```bash
-  source assist/bin/activate.fish
-  ```
-
----
-
-### **4️⃣ Install Dependencies**
-```bash
+### **Step 2: Install Dependencies**
+Install the required Python packages:
+```sh
 pip install -r requirements.txt
 ```
+If you don’t have `pip`, install it using:
+```sh
+python -m ensurepip --default-pip
+```
 
-> 🚀 If you are using **GPU (CUDA)**, install PyTorch manually:
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+### **Step 3: Set Hugging Face API Key (Secure Method)**
+To interact with the chatbot, set up your Hugging Face API key.
+
+**Windows (Command Prompt):**
+```cmd
+set HUGGINGFACE_API_KEY=your_api_key_here
+```
+**Windows (PowerShell):**
+```powershell
+$env:HUGGINGFACE_API_KEY="your_api_key_here"
+```
+**Linux/macOS:**
+```sh
+export HUGGINGFACE_API_KEY="your_api_key_here"
 ```
 
 ---
 
-### **5️⃣ Run the Virtual Assistant**
-```bash
+## 🎤 How to Use
+
+### **Run the Script**
+```sh
 python main.py
 ```
 
----
-
-## 📝 How to Use
-1. **Start the assistant** and wait for it to greet you.  
-2. **Give voice commands** like:  
-   - `"Open YouTube"`  
-   - `"Search Wikipedia for Python"`  
-   - `"What is the time?"`  
-3. **Chat with the AI** by speaking normally.  
-4. The assistant will respond via **text-to-speech** and **text output**.  
+### **Voice Commands Available**
+| Command | Function |
+|---------|----------|
+| "Open YouTube" | Opens YouTube in the browser |
+| "What is the time?" | Tells the current time |
+| "Wikipedia Elon Musk" | Searches Wikipedia for Elon Musk |
+| "Who is the President of India?" | Asks AI chatbot |
+| "Exit" or "Quit" | Stops the assistant |
 
 ---
 
-## 📢 Troubleshooting
+## 🛠 Troubleshooting
+**Issue:** Speech recognition is not working.  
+**Solution:** Make sure your **microphone is working**, and try increasing `adjust_for_ambient_noise()` time.
 
-### 🔴 Error: `externally-managed-environment`
-- Use a **virtual environment** (`venv`) before installing dependencies.
-  
-### 🔴 PyAudio Compilation Error
-- Install missing dependencies:
-  ```bash
-  sudo apt update
-  sudo apt install portaudio19-dev
-  ```
+**Issue:** `Hugging Face API` returns `401 Unauthorized`.  
+**Solution:** Ensure your API key is correct and set in the environment variables.
 
-### 🔴 Model Not Found on Hugging Face
-- Make sure **transformers** and **accelerate** are installed:
-  ```bash
-  pip install transformers accelerate
-  ```
+**Issue:** `ModuleNotFoundError: No module named 'pydub'`.  
+**Solution:** Install `ffmpeg`:
+```sh
+# Linux
+sudo apt install ffmpeg
+
+# macOS (using Homebrew)
+brew install ffmpeg
+
+# Windows
+choco install ffmpeg
+```
 
 ---
 
 ## 🤝 Contributing
-Feel free to **fork**, make changes, and submit a **pull request (PR)**.
+1. **Fork the repo**
+2. **Create a new branch** (`feature-new-command`)
+3. **Commit your changes** (`git commit -m "Added new command"`)
+4. **Push the branch** (`git push origin feature-new-command`)
+5. **Create a Pull Request**
 
 ---
 
 ## 📜 License
-This project is open-source under the **MIT License**.
+This project is licensed under the **MIT License**.
+
 
 
 🎯 Developed by Prajjwal Sahu
