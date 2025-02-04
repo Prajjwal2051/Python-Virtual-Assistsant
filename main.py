@@ -11,7 +11,7 @@ from huggingface_hub import InferenceClient
 
 client=InferenceClient(
     provider="hf-inference",
-    api_key="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"
+    api_key="YOUR_API_KEY"
 )
 
 def chat_with_bot(query):
