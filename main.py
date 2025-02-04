@@ -7,31 +7,25 @@ from gtts import gTTS
 from pydub import AudioSegment
 from pydub.playback import play
 import wikipedia
-from transformers import pipeline
-import torch
+from huggingface_hub import InferenceClient
 
-#  loading the zephyr chatbot model
-chatbot=pipeline(
-    "text-generation",
-    model="HuggingFaceH4/zephyr-7b-alpha",
-    torch_dtype=torch.bfloat16,
-    device_map="cpu"
+client=InferenceClient(
+    provider="hf-inference",
+    api_key="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"
 )
 
-def generate_response(user_input):
-    '''generates a response using zephyr-7b'''
-    system_prompt={
-        "role":"system",
-        "content":"You are a helpful AI assistant, friendly and informative"
-    }
+def chat_with_bot(query):
     messages=[
-        system_prompt,
-        {"role":"user","content":user_input}
+        {"role":"user","content":query}
     ]
-    formatted_prompt=chatbot.tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
-    output=chatbot(formatted_prompt,max_new_tokens=10,do_sample=True,temperature=0.7,top_k=50,top_p=0.95)
-    ai_reply=output[0]["generated_text"].split("<|assistant|>")[-1].strip()
-    return ai_reply
+
+    completion=client.chat.completions.create(
+        model="HuggingFaceH4/zephyr-7b-alpha",
+        messages=messages,
+        max_tokens=100
+    )
+
+    return completion.choices[0].message["content"]
 
 
 def search_wikipedia(query):
@@ -43,8 +37,8 @@ def search_wikipedia(query):
         print("too many results, please be more specific")
         say("too many results, please be more specific")
     except wikipedia.exceptions.PageError:
-        print("sorry, I couldn't finad anything")
-        say("sorry, I couldn't finad anything")
+        print("sorry, I couldn't find anything")
+        say("sorry, I couldn't find anything")
 
 # updated from os.espeak to pyttsx3 which works offline
 # updating it to now google text to speech to make it sound more natural
@@ -120,7 +114,6 @@ if __name__ == "__main__":
             break
 
         else:
-            response=generate_response(query)
-            print(f"AI: {response}")
-            print(response)
-            say(response)
+            bot_response=chat_with_bot(query)
+            print("AI:",bot_response)
+            say(bot_response)
