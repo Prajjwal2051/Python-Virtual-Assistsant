@@ -7,9 +7,32 @@ from gtts import gTTS
 from pydub import AudioSegment
 from pydub.playback import play
 import wikipedia
+from transformers import pipeline
+import torch
 
-# updated from os.espeak to pyttsx3 which works offline
-# updating it to now google text to speech to make it sound more natural
+#  loading the zephyr chatbot model
+chatbot=pipeline(
+    "text-generation",
+    model="HuggingFaceH4/zephyr-7b-alpha",
+    torch_dtype=torch.bfloat16,
+    device_map="cpu"
+)
+
+def generate_response(user_input):
+    '''generates a response using zephyr-7b'''
+    system_prompt={
+        "role":"system",
+        "content":"You are a helpful AI assistant, friendly and informative"
+    }
+    messages=[
+        system_prompt,
+        {"role":"user","content":user_input}
+    ]
+    formatted_prompt=chatbot.tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
+    output=chatbot(formatted_prompt,max_new_tokens=10,do_sample=True,temperature=0.7,top_k=50,top_p=0.95)
+    ai_reply=output[0]["generated_text"].split("<|assistant|>")[-1].strip()
+    return ai_reply
+
 
 def search_wikipedia(query):
     try:
@@ -23,7 +46,8 @@ def search_wikipedia(query):
         print("sorry, I couldn't finad anything")
         say("sorry, I couldn't finad anything")
 
-
+# updated from os.espeak to pyttsx3 which works offline
+# updating it to now google text to speech to make it sound more natural
 def say(text):
     tts = gTTS(text=text, lang="en")
     tts.save("response.mp3")
@@ -90,6 +114,13 @@ if __name__ == "__main__":
             search_query=query.lower().replace("wikipedia","").strip()
             search_wikipedia(search_query)
 
+
         if "exit" in query.lower() or "quit" in query.lower() or "stop" in query.lower():
             say("Goodbye!")
             break
+
+        else:
+            response=generate_response(query)
+            print(f"AI: {response}")
+            print(response)
+            say(response)

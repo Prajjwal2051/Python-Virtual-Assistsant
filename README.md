@@ -1,107 +1,111 @@
-Virtual Assistant using Python
+# Python Virtual Assistant
 
-This is a Python-based virtual assistant that uses speech recognition and text-to-speech (TTS) capabilities. It can recognize voice commands, respond verbally, and open websites. Additionally, it can provide the current time and execute various other functionalities based on voice input.
+This is a Python-based **voice assistant** that can recognize speech, search Wikipedia, open websites, tell the time, and even chat using Hugging Face's **Zephyr-7B** chatbot.
 
-🚀 Features
+---
 
-Speech Recognition: Uses speech_recognition to recognize spoken commands.
+## 🔧 Features
+- **Speech Recognition** 🎧 (Uses Google Speech API)  
+- **Text-to-Speech (TTS)** 🔊 (Using Google TTS)  
+- **Wikipedia Search** 📚  
+- **Website Shortcuts** 🌐 (Easily open sites like YouTube, Google, etc.)  
+- **AI Chatbot** 🤖 (Hugging Face’s Zephyr-7B)  
 
-Text-to-Speech (TTS): Uses gTTS (Google Text-to-Speech) to provide responses.
+---
 
-Audio Playback: Uses pydub to play back generated speech.
+## 📌 Installation Guide (Step-by-Step)
+Follow these steps to **set up and run the assistant** on your system.
 
-Web Navigation: Can open popular websites like YouTube, Google, and Instagram.
+### **1️⃣ Clone the Repository**
+```bash
+git clone https://github.com/Prajjwal2051/Python-Virtual-Assistsant.git
+cd Python-Virtual-Assistsant
+```
 
-Time Query: Responds with the current time when asked.
+---
 
-Noise Reduction: Adjusts for ambient noise before listening to commands.
-
-Error Handling: Provides user-friendly messages for unrecognized speech or request failures.
-
-🔧 Installation & Setup
-
-1️⃣ Create & Activate Virtual Environment
-
+### **2️⃣ Create a Virtual Environment**
+```bash
 python3 -m venv assist
-source assist/bin/activate  # For Linux/macOS
-assist\Scripts\activate    # For Windows (PowerShell)
+```
+- **(Optional) If using fish shell:**
+  ```bash
+  set -gx VIRTUAL_ENV assist
+  set -gx PATH $VIRTUAL_ENV/bin $PATH
+  ```
 
-2️⃣ Install Required Packages
+---
 
-pip install speechrecognition gtts pydub webbrowser datetime
+### **3️⃣ Activate the Virtual Environment**
+- **For Bash/Zsh:**  
+  ```bash
+  source assist/bin/activate
+  ```
+- **For Fish shell:**  
+  ```bash
+  source assist/bin/activate.fish
+  ```
 
-3️⃣ Install System Dependencies
+---
 
-sudo apt install portaudio19-dev ffmpeg alsa-utils jackd2 -y
-pip install pyaudio
+### **4️⃣ Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-4️⃣ Run the Virtual Assistant
+> 🚀 If you are using **GPU (CUDA)**, install PyTorch manually:
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
 
+---
+
+### **5️⃣ Run the Virtual Assistant**
+```bash
 python main.py
+```
 
-📌 How It Works
+---
 
-The assistant listens for a voice command.
+## 📝 How to Use
+1. **Start the assistant** and wait for it to greet you.  
+2. **Give voice commands** like:  
+   - `"Open YouTube"`  
+   - `"Search Wikipedia for Python"`  
+   - `"What is the time?"`  
+3. **Chat with the AI** by speaking normally.  
+4. The assistant will respond via **text-to-speech** and **text output**.  
 
-It recognizes the command and processes the request.
+---
 
-If a website needs to be opened, it uses webbrowser.open().
+## 📢 Troubleshooting
 
-If the user asks for the time, it retrieves the current time and speaks it out.
+### 🔴 Error: `externally-managed-environment`
+- Use a **virtual environment** (`venv`) before installing dependencies.
+  
+### 🔴 PyAudio Compilation Error
+- Install missing dependencies:
+  ```bash
+  sudo apt update
+  sudo apt install portaudio19-dev
+  ```
 
-The response is converted into speech using gTTS and played using pydub.
+### 🔴 Model Not Found on Hugging Face
+- Make sure **transformers** and **accelerate** are installed:
+  ```bash
+  pip install transformers accelerate
+  ```
 
-🔄 Changes & Fixes Implemented
+---
 
-✅ Fixed AttributeError: Could not find PyAudio
+## 🤝 Contributing
+Feel free to **fork**, make changes, and submit a **pull request (PR)**.
 
-Installed missing dependency:
+---
 
-sudo apt install portaudio19-dev
-pip install pyaudio
+## 📜 License
+This project is open-source under the **MIT License**.
 
-✅ Replaced os.system speech output with gTTS for better TTS
-
-Used gtts instead of espeak for more natural-sounding speech
-
-✅ Replaced recognize_bing with recognize_google
-
-Removed API key requirement by using Google Speech Recognition
-
-✅ Fixed FileNotFoundError: No such file or directory: 'ffprobe'
-
-Installed ffmpeg:
-
-sudo apt install ffmpeg
-
-✅ Fixed ALSA / JACK Server Warnings
-
-Suppressed unnecessary logs using:
-
-python3 main.py 2>/dev/null
-
-Installed and restarted ALSA if needed:
-
-sudo apt install alsa-utils jackd2
-sudo alsa force-reload
-
-📌 Usage Examples
-
-"Open YouTube" → Opens YouTube in the browser
-
-"What is the time?" → Tells the current time
-
-Other queries → Responds using TTS
-
-📌 Future Improvements
-
-Add weather updates using an API.
-
-Integrate a chatbot for better interactions.
-
-Automate system tasks such as opening applications.
-
-Improve speech recognition accuracy with NLP models.
 
 🎯 Developed by Prajjwal Sahu
 
