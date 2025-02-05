@@ -9,7 +9,7 @@ from pydub.playback import play
 import wikipedia
 from huggingface_hub import InferenceClient
 
-API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+API_KEY = os.getenv("HF_API_KEY")
 
 client=InferenceClient(
     provider="hf-inference",
