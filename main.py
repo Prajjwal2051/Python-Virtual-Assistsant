@@ -1,4 +1,9 @@
 # importing the required modules and packages
+import utils.net
+import utils.clients
+import utils.http_session
+import utils.transport
+import utils.session
 import speech_recognition as sr
 import os
 import webbrowser
@@ -9,7 +14,7 @@ from pydub.playback import play
 import wikipedia
 from huggingface_hub import InferenceClient
 
-API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+API_KEY = os.getenv("HF_API_KEY")
 
 client=InferenceClient(
     provider="hf-inference",
